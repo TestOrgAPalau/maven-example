@@ -17,7 +17,7 @@
     <!-- SonarQube Cloud properties -->
     <sonar.projectKey>TestOrgAPalau_maven-example</sonar.projectKey>
     <sonar.organization>testorgapalau</sonar.organization>
-    
+  </properties>
 
 
   <dependencies>
