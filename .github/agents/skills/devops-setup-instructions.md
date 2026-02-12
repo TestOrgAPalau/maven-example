@@ -18,7 +18,8 @@ This skill provides concise, platform-specific instructions for configuring secr
 **For SonarQube Cloud:**
 ```
 SONAR_TOKEN: [your SonarQube Cloud token with analysis permissions]
-(SONAR_HOST_URL is not needed for Cloud - it's automatically set to sonarcloud.io)
+SONAR_HOST_URL: [https://sonarcloud.io for EU or https://sonarqube.us for US instance]
+SONAR_ORGANIZATION: [your organization key]
 ```
 
 **For SonarQube Server:**
@@ -45,7 +46,7 @@ SONAR_HOST_URL: [your SonarQube Server URL, e.g., https://sonar.yourcompany.com]
 **For SonarQube Cloud:**
 ```
 SONAR_TOKEN: [your SonarQube Cloud token] - Mark as "Masked" and "Protected"
-SONAR_HOST_URL: https://sonarcloud.io - Optional, can be set in .gitlab-ci.yml
+SONAR_HOST_URL: [https://sonarcloud.io for EU or https://sonarqube.us for US] - Mark as "Protected"
 ```
 
 **For SonarQube Server:**
@@ -140,7 +141,7 @@ Secret: [your SonarQube token]
 **Add SonarQube Server:**
 ```
 Name: SonarQube (or SonarCloud)
-Server URL: [your SonarQube URL or https://sonarcloud.io]
+Server URL: [your SonarQube URL or https://sonarcloud.io (EU) / https://sonarqube.us (US)]
 Server authentication token: Select the credential created above
 ```
 
@@ -153,19 +154,26 @@ Server authentication token: Select the credential created above
 
 ## Token Generation Instructions
 
-### SonarQube Cloud
+### SonarQube Cloud (Scoped Organization Tokens)
 1. Log in to SonarCloud
-2. Go to Account → Security → Generate Tokens
-3. Enter token name (e.g., "GitHub Actions CI")
-4. Select "Expire in" duration
-5. Click "Generate"
-6. Copy the token immediately (it won't be shown again)
+2. Retrieve your organization
+3. Go to Administration → Scoped Organization Tokens
+4. Click the "Create token" button in the top right corner
+5. Enter the token name and description (e.g., "GitHub Actions CI")
+6. Select "Expires in" duration or "No expiration"
+7. Choose "Projects this token can access":
+   - **All current and future projects** - Recommended for CI/CD pipelines
+   - **Custom selection of projects** - Select specific projects using the "Select projects" button
+8. Click "Generate token"
+9. Copy the token immediately from the notification (it won't be shown again)
+
+**Note:** Scoped Organization Tokens are identified by the `sqco_` prefix and are available in Team and Enterprise plans.
 
 ### SonarQube Server
 1. Log in to your SonarQube Server
 2. Go to My Account → Security → Generate Tokens
 3. Enter token name (e.g., "CI Pipeline")
-4. Select token type: "User Token" or "Project Analysis Token"
+4. Select token type: "Global Analysis Token" or "Project Analysis Token"
 5. Click "Generate"
 6. Copy the token immediately (it won't be shown again)
 
